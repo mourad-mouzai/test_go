@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+//commentair
+
 type DBModel struct {
 	DB *sql.DB
 }
@@ -18,7 +20,7 @@ func (m *DBModel) Get(id int) (*Movie, error) {
 	query := `select id, title, description, year, release_date, runtime, rating, mpaa_rating, created_at, updated_at
 		from movies
 		where id = $1`
-		
+
 	row := m.DB.QueryRowContext(ctx, query, id)
 
 	var movie Movie
@@ -53,7 +55,7 @@ func (m *DBModel) Get(id int) (*Movie, error) {
 	}
 	defer rows.Close()
 
-	genres := make(map[int]string) 
+	genres := make(map[int]string)
 	for rows.Next() {
 		var mg MovieGenre
 
@@ -78,10 +80,10 @@ func (m *DBModel) Get(id int) (*Movie, error) {
 }
 
 // All returns all movies
-func (m *DBModel) All() ([]*Movie, error) {	
+func (m *DBModel) All() ([]*Movie, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
-	
+
 	query := `select id, title, description, year, release_date, runtime, rating, mpaa_rating, created_at, updated_at
 		from movies
 		order by title`
@@ -125,7 +127,6 @@ func (m *DBModel) All() ([]*Movie, error) {
 		if err != nil {
 			return nil, err
 		}
-
 
 		genres := make(map[int]string)
 		for genreRows.Next() {
